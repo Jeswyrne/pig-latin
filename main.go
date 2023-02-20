@@ -33,6 +33,8 @@ func main() {
 	r.Get("/", contrl.GetHandler)
 	r.Post("/", contrl.PostHandler)
 
+	fmt.Fprintf(os.Stdout, "Web Server started. Listening on 127.0.0.1:%v\n", port)
+	
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", port),
 		Handler: r,
