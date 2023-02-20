@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 
@@ -34,14 +35,8 @@ func main() {
 	r.Post("/", contrl.PostHandler)
 
 	fmt.Fprintf(os.Stdout, "Web Server started. Listening on 127.0.0.1:%v\n", port)
-	
-	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%d", port),
-		Handler: r,
-	}
-
-	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		fmt.Printf("error starting server: %s\n", err)
-		os.Exit(1)
+	err := http.ListenAndServe(fmt.Sprintf(":%d", port), r)
+	if err != nil {
+		log.Fatalf("error starting server: %s\n", err)
 	}
 }
